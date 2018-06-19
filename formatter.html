@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>Number formatter</title>
+</head>
+<body>
+<input type="text" onchange="format(this)" id='rto'/>
+
+<script type='text/javascript'>
+function format(src){
+	var value = src.value;
+	value = value.replace(/ /g, '');
+	value = value.toUpperCase();
+	console.log(value);
+	var rtoNumber = /[a-zA-Z]{2}\d{1,2}[a-zA-Z]{1,2}\d{1,4}/i;
+	var stateDigit = /[A-Z]{2}/i;
+	var seriesDigit =/[A-Z]{1,2}/ig; 
+	var distDigit = /\d{1,2}/i;
+	var vehDigit = /\d{1,4}/ig;
+	if(value.match(rtoNumber)){
+		var state = value.match(stateDigit)[0];
+		var district = value.match(distDigit)[0];
+		var series = value.match(seriesDigit)[1];
+		var vehNumber = value.match(vehDigit)[1];
+		if(district.length==1)
+			district = '0'+district;
+		if(vehNumber.length<4){
+			var vlength = vehNumber.length;
+			for(var i=4;i>vlength;i--)
+				vehNumber='0'+vehNumber;
+		}
+		console.log('Final Value:'+state+' '+district+' '+series+' '+vehNumber);
+		src.value = state+' '+district+' '+series+' '+vehNumber;
+	}else{
+		console.log('Invalid');
+		return 'Invalid';
+	}
+}
+</script>
+</body>
+</html>
